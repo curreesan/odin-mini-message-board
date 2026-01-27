@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Message Details</title>
+  </head>
+  <body>
+    <h1>Message Details</h1>
+
+    <h2>From: <%= message.user %></h2>
+    <p><strong>Message:</strong> <%= message.text %></p>
+    <p><strong>Added:</strong> <%= message.added.toLocaleString() %></p>
+
+    <p><a href="/">Back to all messages</a></p>
+  </body>
+</html>
