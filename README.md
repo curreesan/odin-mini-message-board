@@ -1,8 +1,8 @@
-# mini-message-board
+# Mini Message Board
 
-A simple **Mini Message Board** web app built with **Node.js**, **Express**, and **EJS** — based on _The Odin Project_ NodeJS curriculum assignment.
+A simple **message board web app** built with **Node.js**, **Express**, **EJS**, and **PostgreSQL** — following _The Odin Project_ NodeJS curriculum.
 
-This project lets users view and submit messages in a message board format via a web UI.
+Users can view existing messages, submit new ones (with name and text), and view individual message details. Messages are now **persistently stored** in a PostgreSQL database (no longer reset on server restart).
 
 ---
 
@@ -10,11 +10,15 @@ This project lets users view and submit messages in a message board format via a
 
 👉 https://odin-mini-message-board-emsq.onrender.com/
 
+_(Hosted on Render with PostgreSQL database)_
+
 ---
 
 ## 🧱 Features
 
-- **Home page** — Lists all messages.
-- **Add message form** — Submit a new message with name and content.
-- **Express routes** — Handles message listing and creation.
-- **EJS templates** — Renders HTML on the server.
+- View all messages on the home page (newest first)
+- Submit new messages via a simple form (name + message text)
+- View individual message details
+- **Persistent storage** using PostgreSQL (messages survive server restarts and deploys)
+- Basic server-side input validation
+- Clean modular structure (routes separated, database queries in dedicated file)

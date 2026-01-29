@@ -1,50 +1,59 @@
-const { parse } = require("dotenv");
 const express = require("express");
 const router = express.Router();
 
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date(),
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date(),
-  },
-];
+const { getAllMessages, getMessageById, addMessage } = require("../db/queries");
 
-router.get("/", (req, res) => {
-  res.render("index", {
-    title: "Mini Messageboard",
-    messages: messages,
-  });
-});
-
-router.get("/messages/:id", (req, res) => {
-  const id = req.params.id;
-  const messageIndex = parseInt(id);
-
-  const message = messages[messageIndex];
-
-  res.render("message", { message: message });
+router.get("/", async (req, res) => {
+  try {
+    const messages = await getAllMessages();
+    res.render("index", { title: "Mini Message Board", messages });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
 
 router.get("/new", (req, res) => {
   res.render("form");
 });
 
-router.post("/new", (req, res) => {
+router.post("/new", async (req, res) => {
   const { messageUser, messageText } = req.body;
 
-  messages.push({
-    text: messageText,
-    user: messageUser,
-    added: new Date(),
-  });
+  if (!messageUser?.trim() || !messageText?.trim()) {
+    return res.status(400).send("Name and message are required.");
+  }
 
-  res.redirect("/");
+  if (messageUser.length > 100) {
+    return res.status(400).send("Name too long (max 100 chars).");
+  }
+
+  try {
+    await addMessage(messageUser.trim(), messageText.trim());
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error saving message");
+  }
+});
+
+router.get("/messages/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (isNaN(id)) {
+    return res.status(400).send("Invalid message ID");
+  }
+
+  try {
+    const message = await getMessageById(id);
+    if (!message) {
+      return res.status(404).send("Message not found");
+    }
+    res.render("message", { message });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
 
 module.exports = router;

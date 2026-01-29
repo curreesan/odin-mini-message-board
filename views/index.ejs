@@ -11,11 +11,11 @@
 
   <% messages.forEach((msg, index) => { %>
     <div>
-      <strong><%= msg.user %></strong> said:
+      <strong><%= msg.user_name %></strong> said:
       <p><%= msg.text %></p>
       <small><%= msg.added.toLocaleString() %></small>
     </div>
-    <a href="/messages/<%= index %>"><button>Open</button></a>
+    <a href="/messages/<%= msg.id %>">Open</a>
     <hr>
   <% }) %>
 </body>

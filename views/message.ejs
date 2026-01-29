@@ -7,9 +7,9 @@
   <body>
     <h1>Message Details</h1>
 
-    <h2>From: <%= message.user %></h2>
-    <p><strong>Message:</strong> <%= message.text %></p>
-    <p><strong>Added:</strong> <%= message.added.toLocaleString() %></p>
+    <h2><%= message.user_name %></h2>
+    <p><%= message.text %></p>
+    <small><%= new Date(message.added).toLocaleString() %></small>
 
     <p><a href="/">Back to all messages</a></p>
   </body>
